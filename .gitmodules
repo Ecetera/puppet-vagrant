@@ -1,0 +1,30 @@
+[submodule "puppet/modules/inifile"]
+	path = puppet/modules/inifile
+	url = https://github.com/puppetlabs/puppetlabs-inifile.git
+[submodule "puppet/modules/r10k"]
+	path = puppet/modules/r10k
+	url = https://github.com/acidprime/r10k.git
+[submodule "puppet/modules/abrader-gms"]
+	path = puppet/modules/abrader-gms
+	url = https://github.com/abrader/abrader-gms
+[submodule "puppet/modules/stdlib"]
+	path = puppet/modules/stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
+[submodule "puppet/modules/ruby"]
+	path = puppet/modules/ruby
+	url = https://github.com/puppetlabs/puppetlabs-ruby.git
+[submodule "puppet/modules/gcc"]
+	path = puppet/modules/gcc
+	url = https://github.com/puppetlabs/puppetlabs-gcc.git
+[submodule "puppet/modules/pe_gem"]
+	path = puppet/modules/pe_gem
+	url = https://github.com/puppetlabs/puppetlabs-pe_gem.git
+[submodule "puppet/modules/vcsrepo"]
+	path = puppet/modules/vcsrepo
+	url = https://github.com/puppetlabs/puppetlabs-vcsrepo.git
+[submodule "puppet/modules/git"]
+	path = puppet/modules/git
+	url = https://github.com/puppetlabs/puppetlabs-git.git
+[submodule "puppet/modules/portage"]
+	path = puppet/modules/portage
+	url = https://github.com/gentoo/puppet-portage.git

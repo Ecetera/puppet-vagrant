@@ -1,0 +1,19 @@
+#### Setup
+
+````
+$ vagrant up
+````
+
+#### Create a self-signed SSL certificate on OSX (if needed for logstash-forwarder)
+
+````
+$ openssl genrsa -out ssl.key 2048
+$ openssl req -new -key ssl.key -batch -out ssl.csr
+$ openssl req -x509 -days 3650 -in ssl.csr -key ssl.key -out ssl.crt
+````
+
+#### TODO
+
+-- Documentation
+
+-- logstash-forwarder init.d script needs to point to the right config file `-config /etc/logstashforwarder/config.json`
