@@ -39,7 +39,8 @@ Vagrant.configure('2') do |config|
   config.vm.define "puppet" do |node|
     node.vm.host_name = "puppet.boxnet"
     node.vm.network :private_network, ip: "10.0.0.10"
-    node.vm.network :forwarded_port, guest: 80, host: 8080
+    node.vm.network :forwarded_port, guest: 80, host: 8000
+    node.vm.network :forwarded_port, guest: 9090, host: 9090 #Jenkins
     # The provisioners below will run in order
     # Install Puppet Master if it's not already installed
     node.vm.provision "shell", path: "bootstrap/centos-puppetmaster.sh"
