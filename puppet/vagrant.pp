@@ -22,11 +22,11 @@ node 'puppet.boxnet' {
     group  => 'root',
     source => '/vagrant/puppet/hiera.yaml',
   }
-  file { '/var/lib/puppet/reports':
-    owner   => 'puppet',
-    group   => 'puppet',
-    recurse => true,
-  }
+  #  file { '/var/lib/puppet/reports':
+  #    owner   => 'puppet',
+  #    group   => 'puppet',
+  #    recurse => true,
+  #  }
   sshkey { "gitlab.services.ecetera.com.au":
     ensure => present,
     type   => "ssh-rsa",

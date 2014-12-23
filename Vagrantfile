@@ -63,24 +63,13 @@ Vagrant.configure('2') do |config|
     node.vm.network :forwarded_port, guest: 9200, host: 9200 #Elasticsearch
     node.vm.provision :hosts
     node.vm.provision "shell", path: "bootstrap/centos-puppet.sh"
-    node.vm.provision "puppet" do |puppet|
-      puppet.manifests_path = "puppet/manifests"
-      puppet.manifest_file = "vagrant.pp"
-      puppet.module_path = "site"
-      puppet.hiera_config_path = "hiera.yaml"
-    end
   end
   config.vm.define "mon" do |node|
     node.vm.host_name = "mon.boxnet"
     node.vm.network :private_network, ip: "10.0.0.12"
     node.vm.provision :hosts
     node.vm.network :forwarded_port, guest: 15672, host: 15672 #RabbitMQ
+    node.vm.network :forwarded_port, guest: 3000, host: 3000 #Uchiwa
     node.vm.provision "shell", path: "bootstrap/centos-puppet.sh"
-    node.vm.provision "puppet" do |puppet|
-      puppet.manifests_path = "puppet/manifests"
-      puppet.manifest_file = "vagrant.pp"
-      puppet.module_path = "site"
-      puppet.hiera_config_path = "hiera.yaml"
-    end
   end
 end
