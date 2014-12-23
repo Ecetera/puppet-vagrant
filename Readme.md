@@ -26,4 +26,3 @@ $ openssl req -x509 -days 3650 -in ssl.csr -key ssl.key -out ssl.crt
 
 -- Documentation
 
--- logstash-forwarder init.d script needs to point to the right config file `-config /etc/logstashforwarder/config.json`
