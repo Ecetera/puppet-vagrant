@@ -6,11 +6,13 @@ $ vagrant up
 
 `$ vagrant ssh puppet` to log in to Puppet Master server
 
-`localhost:3000` to access Uchiwa dashboard
+`localhost:5000` Puppet managed infrastructure view by Puppetboard
 
-`localhost:15672` to manage RabbitMQ
+`localhost:3000` to access Uchiwa dashboard display overview of Sensu
 
-`localhost:9292` Kibana dashboard
+`localhost:15672` to manage RabbitMQ middleware
+
+`localhost:8080` Kibana dashboard for centralised logs
 
 `localhost:9090` Jenkins
 

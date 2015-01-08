@@ -38,8 +38,8 @@ Vagrant.configure('2') do |config|
 
   config.vm.define "puppet" do |node|
     node.vm.host_name = "puppet.boxnet"
-    node.vm.network :private_network, ip: "10.0.0.10"
-    node.vm.network :forwarded_port, guest: 80, host: 8000
+    node.vm.network :private_network, ip: "10.1.1.10"
+    node.vm.network :forwarded_port, guest: 5000, host: 5000 #Puppetboard
     node.vm.network :forwarded_port, guest: 9090, host: 9090 #Jenkins
     node.vm.synced_folder "environments/", "/etc/puppet/environments", create: true
     # The provisioners below will run in order
@@ -58,15 +58,15 @@ Vagrant.configure('2') do |config|
   end
   config.vm.define "elk" do |node|
     node.vm.host_name = "elk.boxnet"
-    node.vm.network :private_network, ip: "10.0.0.11"
-    node.vm.network :forwarded_port, guest: 9292, host: 9292 #Kibana
+    node.vm.network :private_network, ip: "10.1.1.11"
+    node.vm.network :forwarded_port, guest: 80, host: 8080 #Kibana
     node.vm.network :forwarded_port, guest: 9200, host: 9200 #Elasticsearch
     node.vm.provision :hosts
     node.vm.provision "shell", path: "bootstrap/centos-puppet.sh"
   end
   config.vm.define "mon" do |node|
     node.vm.host_name = "mon.boxnet"
-    node.vm.network :private_network, ip: "10.0.0.12"
+    node.vm.network :private_network, ip: "10.1.1.12"
     node.vm.provision :hosts
     node.vm.network :forwarded_port, guest: 15672, host: 15672 #RabbitMQ
     node.vm.network :forwarded_port, guest: 3000, host: 3000 #Uchiwa
