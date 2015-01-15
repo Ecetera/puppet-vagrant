@@ -5,5 +5,5 @@
   :datadir: "/etc/puppet/environments/%{::environment}/data"
 :hierarchy:
   - "%{::hostname}"
-  - "%{::environment}"
+  - "%{::role}"
   - common
