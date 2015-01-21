@@ -41,7 +41,6 @@ Vagrant.configure('2') do |config|
     node.vm.network :private_network, ip: "10.1.1.10"
     node.vm.network :forwarded_port, guest: 5000, host: 5000 #Puppetboard
     node.vm.network :forwarded_port, guest: 9090, host: 9090 #Jenkins
-    node.vm.synced_folder "environments/", "/etc/puppet/environments", create: true
     # The provisioners below will run in order
     # Install Puppet Master if it's not already installed
     node.vm.provision "shell", path: "bootstrap/centos-puppetmaster.sh"

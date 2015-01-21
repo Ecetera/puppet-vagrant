@@ -1,9 +1,6 @@
 [submodule "puppet/modules/inifile"]
 	path = puppet/modules/inifile
 	url = https://github.com/puppetlabs/puppetlabs-inifile.git
-[submodule "puppet/modules/r10k"]
-	path = puppet/modules/r10k
-	url = https://github.com/acidprime/r10k.git
 [submodule "puppet/modules/stdlib"]
 	path = puppet/modules/stdlib
 	url = https://github.com/puppetlabs/puppetlabs-stdlib.git
@@ -28,3 +25,6 @@
 [submodule "puppet/modules/gms"]
 	path = puppet/modules/gms
 	url = https://github.com/abrader/abrader-gms.git
+[submodule "puppet/modules/r10k"]
+	path = puppet/modules/r10k
+	url = https://github.com/acidprime/r10k.git
