@@ -1,7 +1,25 @@
 # Needed to kick start Vagrant with this out-of-band manifest
 
 node 'puppet.boxnet' {
-
+  include r10k::mcollective
+  class { '::r10k':
+    sources       => {
+      'puppet'    => {
+        'remote'  => 'git@gitlab.services.ecetera.com.au:ecetera/puppet-control.git',
+        'basedir' => "${::settings::confdir}/environments",
+        'prefix'  => false,
+      }
+    },
+  }
+  class { '::hiera':
+    backends  => ['yaml'],
+    datadir   => '/etc/puppet/environments/%{::environment}/data',
+    hierarchy => [
+      '%{::hostname}',
+      '%{::role}',
+      'common',
+    ],
+  }
   service { 'puppetmaster':
     ensure => 'running',
     enable => 'true',
@@ -16,17 +34,6 @@ node 'puppet.boxnet' {
     setting => 'environmentpath',
     value   => '$confdir/environments',
   }
-  file { '/etc/puppet/hiera.yaml':
-    ensure => link,
-    owner  => 'root',
-    group  => 'root',
-    source => '/vagrant/puppet/hiera.yaml',
-  }
-  #  file { '/var/lib/puppet/reports':
-  #    owner   => 'puppet',
-  #    group   => 'puppet',
-  #    recurse => true,
-  #  }
   sshkey { "gitlab.services.ecetera.com.au":
     ensure => present,
     type   => "ssh-rsa",
@@ -41,15 +48,5 @@ node 'puppet.boxnet' {
     project_name => 'ecetera/puppet-control',
     server_url   => 'https://gitlab.services.ecetera.com.au',
     provider     => 'gitlab',
-  }
-  class { '::r10k':
-    sources       => {
-      'puppet'    => {
-        'remote'  => 'git@gitlab.services.ecetera.com.au:ecetera/puppet-control.git',
-        'basedir' => "${::settings::confdir}/environments",
-        'prefix'  => false,
-      }   
-    },  
-    #purgedirs         => ["${::settings::confdir}/environments"],
   }
 }

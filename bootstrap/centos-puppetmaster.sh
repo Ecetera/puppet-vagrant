@@ -33,5 +33,3 @@ echo "Puppet installed!"
 
 # Generate Deploy key to be able to clone repos from Gitlab
 ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa
-
-puppet agent -t
