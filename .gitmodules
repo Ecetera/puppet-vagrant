@@ -28,3 +28,6 @@
 [submodule "puppet/modules/r10k"]
 	path = puppet/modules/r10k
 	url = https://github.com/acidprime/r10k.git
+[submodule "puppet/modules/hiera"]
+  path = puppet/modules/hiera
+  url = https://github.com/hunner/puppet-hiera.git

@@ -1,9 +1,0 @@
----
-:backends:
-  - yaml
-:yaml:
-  :datadir: "/etc/puppet/environments/%{::environment}/data"
-:hierarchy:
-  - "%{::hostname}"
-  - "%{::role}"
-  - common
