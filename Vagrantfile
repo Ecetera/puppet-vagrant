@@ -7,9 +7,6 @@
 require 'vagrant-hosts'
 
 Vagrant.configure('2') do |config|
-  # All Vagrant configuration is done here. The most common configuration
-  # options are documented and commented below. For a complete reference,
-  # please see the online documentation at vagrantup.com.
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -18,23 +15,16 @@ Vagrant.configure('2') do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "centos65"
 
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
-   config.vm.provider :virtualbox do |vb|
-     # Don't boot with headless mode
-     #vb.gui = true
-     # Use VBoxManage to customize the VM. For example to change memory:
-     vb.customize ["modifyvm", :id, "--memory", "1024"]
-     # Console for debugging if needed
-     #vb.gui = true
-     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-   end
-  #
-  # View the documentation for the provider you're using for more
-  # information on available options.
+  config.vm.provider :virtualbox do |vb|
+    # Don't boot with headless mode
+    #vb.gui = true
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "512"]
+    # Console for debugging if needed
+    #vb.gui = true
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  end
 
   config.vm.define "puppet" do |node|
     node.vm.host_name = "puppet.boxnet"
@@ -54,6 +44,8 @@ Vagrant.configure('2') do |config|
       #puppet.facter = { "vagrant" => "1" }
     end
     node.vm.provision "shell", inline: "r10k deploy environment -vp"
+    # Run Puppet and force exit code to 0 so Vagrant doesn't exit
+    node.vm.provision "shell", inline: "puppet agent -t;true"
   end
   config.vm.define "elk" do |node|
     node.vm.host_name = "elk.boxnet"
@@ -62,6 +54,8 @@ Vagrant.configure('2') do |config|
     node.vm.network :forwarded_port, guest: 9200, host: 9200 #Elasticsearch
     node.vm.provision :hosts
     node.vm.provision "shell", path: "bootstrap/centos-puppet.sh"
+    # Run Puppet and force exit code to 0 so Vagrant doesn't exit
+    node.vm.provision "shell", inline: "puppet agent -t;true"
   end
   config.vm.define "mon" do |node|
     node.vm.host_name = "mon.boxnet"
@@ -70,5 +64,16 @@ Vagrant.configure('2') do |config|
     node.vm.network :forwarded_port, guest: 15672, host: 15672 #RabbitMQ
     node.vm.network :forwarded_port, guest: 3000, host: 3000 #Uchiwa
     node.vm.provision "shell", path: "bootstrap/centos-puppet.sh"
+    # Run Puppet and force exit code to 0 so Vagrant doesn't exit
+    node.vm.provision "shell", inline: "puppet agent -t;true"
+  end
+  config.vm.define "git" do |node|
+    node.vm.host_name = "git.boxnet"
+    node.vm.network :private_network, ip: "10.1.1.13"
+    node.vm.provision :hosts
+    node.vm.network :forwarded_port, guest: 80, host: 9595 #Gitlab
+    node.vm.provision "shell", path: "bootstrap/centos-puppet.sh"
+    # Run Puppet and force exit code to 0 so Vagrant doesn't exit
+    node.vm.provision "shell", inline: "puppet agent -t;true"
   end
 end
