@@ -1,0 +1,44 @@
+---
+
+r10k::sources:
+  puppet:
+    remote: 'git@gitlab.example.com.au:puppet-control.git'
+    basedir: '/etc/puppet/environments'
+    prefix: false
+
+hiera::backends:
+  - 'yaml'
+hiera::datadir: '/etc/puppet/environments/%{::environment}/data'
+hiera::hierarchy:
+  - "%{::hostname}"
+  - 'common'
+
+enable_puppet:
+  'puppetmaster':
+    ensure: 'running'
+    enable: true
+
+settings:
+  'Configure environmentpath':
+    ensure: 'present'
+    path: '/etc/puppet/puppet.conf'
+    section: 'main'
+    setting: 'environmentpath'
+    value: '$confdir/environments' 
+
+ssh_keys:
+  'gitlab.example.com.au':
+    ensure: 'present'
+    type: 'ssh-rsa'
+    target: '/root/.ssh/known_hosts'
+    key: 'KEY GOES HERE'
+
+deploy_keys:
+  'Add deploy key to puppet-control':
+    ensure: 'present'
+    name: "${::fqdn}"
+    path: '/root/.ssh/id_rsa.pub'
+    token: 'GITLAB TOKEN'
+    project_name: 'puppet-control'
+    server_url: 'https://gitlab.example.com.au'
+    provider: 'gitlab'
