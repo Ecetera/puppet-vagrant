@@ -17,7 +17,7 @@ if which puppet > /dev/null 2>&1; then
   exit 0
 fi
 
-echo "Configuring PuppetLabs repo..."
+echo "Configuring Puppet Labs repo..."
 repo_path=$(mktemp)
 yum install -y wget
 wget --output-document="${repo_path}" "${REPO_URL}" 2>/dev/null
@@ -25,11 +25,9 @@ rpm -i "${repo_path}" >/dev/null
 
 echo "Installing Puppet Master"
 yum install -y puppet-server > /dev/null
-# Start puppetmaster on boot
-puppet resource service puppetmaster ensure=running enable=true
 # Autosign certificates
 echo '*.boxnet' > /etc/puppet/autosign.conf
 echo "Puppet installed!"
 
-# Generate Deploy key to be able to clone repos from Gitlab
+# Generate Deploy key to be able to clone r10k repo from Gitlab
 ssh-keygen -t rsa -N '' -f /root/.ssh/id_rsa
