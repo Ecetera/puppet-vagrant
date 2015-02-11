@@ -1,0 +1,10 @@
+---
+
+:backends:
+  - yaml
+
+:hierarchy:
+  - 'vagrant'
+
+:yaml:
+  :datadir: '/vagrant/puppet/data'
