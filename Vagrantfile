@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 require 'vagrant-hosts'
+require 'vagrant-aws'
 
 Vagrant.configure('2') do |config|
 
@@ -18,7 +19,23 @@ Vagrant.configure('2') do |config|
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
-
+  config.vm.provider :aws do |aws, override|
+    aws.access_key_id = ENV['AWS_KEY']
+    aws.secret_access_key = ENV['AWS_SECRET']
+    aws.ami = "ami-b1eb9e8b" #Ubuntu 14.04 LTS 
+    override.ssh.username = "ubuntu"
+    #aws.ami = "ami-eb2a47d1" #RHEL 6.5 
+    #override.ssh.username = "ec2-user"
+    aws.region = "ap-southeast-2"
+    aws.instance_type = "t1.micro"
+    aws.security_groups = ["open"] 
+    aws.keypair_name = ENV['AWS_KEYNAME']
+    #aws.tags = { 'Name' => box[:name] }
+    override.ssh.private_key_path = ENV['AWS_KEYPATH']
+    override.vm.box = "dummy"
+    override.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
+    override.vm.provision "shell", path: "bootstrap/ubuntu-puppetmaster.sh"
+  end
   config.vm.define "puppet" do |node|
     node.vm.host_name = "puppet.boxnet"
     node.vm.network :private_network, ip: "10.1.1.10"
