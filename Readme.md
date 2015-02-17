@@ -1,22 +1,29 @@
 #### Setup
 
-1. Populate `puppet/data/vagrant.yaml` file with your values
+1. Populate `puppet/data/vagrant.yaml` file with appropriate values:
+  - Git `remote` of puppet-control repo under `r10k::sources`
+  - Under `ssh_keys`, name the resource and add host `key` of the Gitlab server
+  - Gitlab `server_url` and Gitlab API `token`
 
-After you may want to run the following to tell git to ignore the above changes.
+2. You may want to run the following to tell git to ignore the above changes.
 
 ````
 git update-index --assume-unchanged puppet/data/vagrant.yaml
 ````
 
-Then run
+3. Pull down submodules needed to bootstrap Puppet install with the following script:
+
+````
+./init-submodules.sh
+````
+
+4. Then run
 
 ````
 $ vagrant up
 ````
 
-`$ vagrant ssh puppet` to log in to Puppet Master server if needed
-
-Or access services at the following URLs:
+Access services at the following URLs:
 
 http://localhost:5000 Puppet managed infrastructure view by Puppetboard
 
