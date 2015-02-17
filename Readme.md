@@ -7,21 +7,21 @@
 
 2. You may want to run the following to tell git to ignore the above changes.
 
-```
-git update-index --assume-unchanged puppet/data/vagrant.yaml
-```
+    ```
+    $ git update-index --assume-unchanged puppet/data/vagrant.yaml
+    ```
 
 3. Pull down submodules needed to bootstrap Puppet install with the following script:
 
-```
-./init-submodules.sh
-```
+    ```
+    $ ./init-submodules.sh
+    ```
 
 4. Then run
 
-```
-$ vagrant up
-```
+    ```
+    $ vagrant up
+    ```
 
 Access services at the following URLs:
 
