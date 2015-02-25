@@ -8,17 +8,12 @@ r10k::sources:
 
 hiera::backends:
   - 'yaml'
-hiera::datadir: '/etc/puppet/environments/%{::environment}/data'
+hiera::datadir: '/etc/puppet/environments/%%{}{::environment}/data'
 hiera::hierarchy:
-  - "%{::hostname}"
+  - "%%{}{::hostname}"
   - 'common'
 
-enable_puppet:
-  'puppetmaster':
-    ensure: 'running'
-    enable: true
-
-settings:
+ini_settings:
   'Configure environmentpath':
     ensure: 'present'
     path: '/etc/puppet/puppet.conf'
@@ -33,10 +28,10 @@ ssh_keys:
     target: '/root/.ssh/known_hosts'
     key: 'KEY GOES HERE'
 
-deploy_keys:
+git_deploy_keys:
   'Add deploy key to puppet-control':
     ensure: 'present'
-    name: "${::fqdn}"
+    name: "%{::fqdn}"
     path: '/root/.ssh/id_rsa.pub'
     token: 'GITLAB TOKEN'
     project_name: 'puppet-control'
