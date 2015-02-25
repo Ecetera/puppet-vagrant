@@ -36,7 +36,7 @@
     $ vagrant up puppet
     ```
 
-or at DigitalOcean
+    or at DigitalOcean
 
     ```
     $ vagrant up puppet --provider=digital_ocean
