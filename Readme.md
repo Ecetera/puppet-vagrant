@@ -17,10 +17,29 @@
     $ ./init-submodules.sh
     ```
 
-4. Then run
+4. If using AWS or DigitalOcean providers populate `~/.cloud_profile`
 
     ```
-    $ vagrant up
+    #!/bin/bash
+    
+    export AWS_KEY=
+    export AWS_SECRET=
+    export AWS_KEYNAME=
+    export AWS_KEYPATH=
+    export DO_TOKEN=
+    export DO_KEYPATH=
+    ```
+
+5. To spin up Puppet Master locally run
+
+    ```
+    $ vagrant up puppet
+    ```
+
+or at DigitalOcean
+
+    ```
+    $ vagrant up puppet --provider=digital_ocean
     ```
 
 Access services at the following URLs:
