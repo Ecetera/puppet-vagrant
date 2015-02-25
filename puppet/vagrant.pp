@@ -7,10 +7,16 @@ node default {
   create_resources(sshkey, hiera('ssh_keys'))
   create_resources(git_deploy_key, hiera('git_deploy_keys'))
 
-  # Basic Autosigning of certificates
+  # Puppet likes properly formatted hosts file
 
-  file { '/etc/puppet/autosign.conf':
-    content => '*.boxnet',
+  host { "${fqdn}":
+    host_aliases => "${hostname}",
+  }
+
+  # Basic Autosigning of server certificates in our domain
+
+  file { "${settings::confdir}/autosign.conf":
+    content => "*.${$domain}",
   }
 
   # Hack below to start puppetmaster daemon. Receiving an error:
@@ -20,7 +26,7 @@ node default {
   # Permission denied - /etc/puppet/environments/production
 
   file { 'environment':
-    path   => '/etc/puppet/environments/production',
+    path   => "${settings::confdir}/environments/production",
     ensure => directory,
   }
   service { 'puppetmaster':
